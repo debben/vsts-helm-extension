@@ -1,0 +1,32 @@
+{
+    "manifestVersion": 1,
+    "id": "vsts-helm-extension",
+    "name": "Helm Extension",
+    "version": "0.0.1",
+    "publisher": "deben",
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
+    "description": "Tools for using Helm within VSTS",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "images/extension-icon.png"
+    },
+    "files": [{
+            "path": "Helm"
+        }
+    ],
+    "contributions": [{
+            "id": "HelmTask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "HelmTask"
+            }
+        }
+    ]
+}
