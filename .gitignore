@@ -2,3 +2,4 @@ Helm/node_modules
 *.js
 *.js.map
 Helm/typings
+config.json

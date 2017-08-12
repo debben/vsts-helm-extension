@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceRoot}/Helm/src/helm.ts",
+            "cwd": "${workspaceRoot}/Helm",
+            "env": {
+                "VSTS_PUBLIC_VARIABLES": "[\"Agent.Version\", \"Agent.TempDirectory\", \"Agent.Workfolder\", \"Agent.ToosDirectory\"]",
+                "AGENT_WORKFOLDER": "/tmp",
+                "AGENT_TEMPDIRECTORY": "/tmp",
+                "AGENT_TOOLSDIRECTORY": "/home/don/bin", 
+                "AGENT_VERSION": "2.115.0",                
+                "INPUT_kubernetesServiceEndpoint": "<service endpoint name>",
+                "INPUT_command": "list",
+                "INPUT_helmVersion": "2.5.0",
+                "ENDPOINT_AUTH_PARAMETER_<INPUT_kubernetesServiceEndpoint value>_kubeconfig": "{ your minikube config as json}"
+            }
+        }
+    ]
+}

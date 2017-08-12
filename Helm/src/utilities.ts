@@ -1,13 +1,11 @@
 "use strict";
 
-var https   = require('https');
-var fs      = require('fs');
+import * as fs from "fs";
 import * as path from "path";
 import * as tl from "vsts-task-lib/task";
 import * as toolLib from 'vsts-task-tool-lib/tool';
 import * as restm from 'typed-rest-client/RestClient';
 import * as os from "os";
-import * as util from "util";
 
 //
 // Helm versions interface
@@ -107,7 +105,7 @@ async function acquireHelm(version: string): Promise<string> {
         }
 
         extPath = path.join(extPath, 'n'); // use as short a path as possible due to nested node_modules folders
-        extPath = await toolLib.extract7z(downloadPath, extPath);
+        extPath = await toolLib.extractTar(downloadPath);
     }
     else {
         extPath = await toolLib.extractTar(downloadPath);
@@ -142,12 +140,5 @@ function ensureDirExists(dirPath : string) : void
 {
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath);
-    }
-}
-
-function assertFileExists(path: string) {
-    if(!fs.existsSync(path)) {
-        tl.error(tl.loc('FileNotFoundException', path));
-        throw new Error(tl.loc('FileNotFoundException', path));
     }
 }

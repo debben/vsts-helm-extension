@@ -24,7 +24,7 @@ export default class ClusterConnection {
     private async initialize() {
         if(!this.helmPath || !fs.existsSync(this.helmPath))
         {
-            tl.debug(tl.loc("DownloadingHelm"));
+            tl.debug(tl.loc("DownloadingClient"));
             await utils.getHelm(this.version, true);
             this.helmPath = toolLib.findLocalTool("helm", this.version) + '/helm';
         }
@@ -35,7 +35,7 @@ export default class ClusterConnection {
         return command;
     }
 
-    // open kubernetes connection
+    // get kubeconf
     public async open(kubernetesEndpoint?: string){
          await this.initialize();
          if (kubernetesEndpoint) {
@@ -43,7 +43,6 @@ export default class ClusterConnection {
          }
     }
 
-    // close kubernetes connection
     public close(): void {
         // all configuration ase in agent temp directory. Hence automatically deleted.
     }
