@@ -2,11 +2,12 @@
     "manifestVersion": 1,
     "id": "vsts-helm-extension",
     "name": "Helm Extension",
-    "version": "0.0.5",
+    "version": "0.1.0",
     "publisher": "debben",
     "targets": [{
         "id": "Microsoft.VisualStudio.Services"
     }],
+    "public": true,
     "description": "Tools for using Helm within VSTS",
     "categories": [
         "Build and release"
