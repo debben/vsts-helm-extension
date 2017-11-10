@@ -87,7 +87,7 @@ async function acquireHelm(version: string): Promise<string> {
     let fileName: string = osPlat == 'win32'? 'helm-v' + version + '-windows-' + arch :
                                                 'helm-v' + version + '-' + osPlat + '-' + arch;  
 
-    let urlFileName: string = fileName +  osPlat == 'win32'? '.zip' : '.tar.gz';
+    let urlFileName: string = fileName +  (osPlat == 'win32'? '.zip' : '.tar.gz');
 
     let downloadUrl = 'https://storage.googleapis.com/kubernetes-helm/' + urlFileName;
 
