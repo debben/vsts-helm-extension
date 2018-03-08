@@ -3,9 +3,11 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as tl from "vsts-task-lib/task";
+import * as trm from "vsts-task-lib/toolrunner";
 import * as toolLib from 'vsts-task-tool-lib/tool';
 import * as restm from 'typed-rest-client/RestClient';
 import * as os from "os";
+import * as uuidV4 from 'uuid/v4';
 
 //
 // Helm versions interface
@@ -105,7 +107,7 @@ async function acquireHelm(version: string): Promise<string> {
         }
 
         extPath = path.join(extPath, 'n'); // use as short a path as possible due to nested node_modules folders
-        extPath = await toolLib.extractTar(downloadPath);
+        extPath = await extractTar(downloadPath);
     }
     else {
         extPath = await toolLib.extractTar(downloadPath);
@@ -141,4 +143,61 @@ function ensureDirExists(dirPath : string) : void
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath);
     }
+}
+
+/**
+ * The following code is used with attribution from 
+ * https://github.com/Microsoft/vsts-task-tool-lib and 
+ * caries with it the following copyright and MIT license
+ * statement:
+ * 
+ *  MIT License
+
+    Copyright (c) Microsoft Corporation. All rights reserved.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE
+ * 
+ */
+
+function _getAgentTemp(): string {
+    tl.assertAgent('2.115.0');
+    let tempDirectory = tl.getVariable('Agent.TempDirectory');
+    if (!tempDirectory) {
+        throw new Error('Agent.TempDirectory is not set');
+    }
+
+    return tempDirectory;
+}
+
+async function extractTar(file: string): Promise<string> {
+
+    console.log(tl.loc('TOOL_LIB_ExtractingArchive'));
+    let dest = (() => {
+        let dest = path.join(_getAgentTemp(), uuidV4());
+    
+        tl.mkdirP(dest);
+        return dest;
+    })();
+
+    let tr: trm.ToolRunner = tl.tool('tar');
+    tr.arg(['xzC', dest.replace('\\','/'), '--force-local', '-f', file]);
+
+    await tr.exec();
+    return dest;
 }
