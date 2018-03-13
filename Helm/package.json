@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@types/node": "^8.0.54",
     "del": "2.2.0",
     "js-yaml": "3.6.1",
     "request-promise": "^4.2.1",
