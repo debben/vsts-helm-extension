@@ -1,3 +1,6 @@
+# DEPRECATION WARNING
+This extension is no longer actively maintained. There is now an official Helm extension available for VSTS in the [vsts-tasks](https://github.com/microsoft/vsts-tasks) repo. Please use this extension as the one contained in this repository will no longer recieve features or bug fixes.
+
 # VSTS Helm Extension
 
 The unofficial extension for Helm!
