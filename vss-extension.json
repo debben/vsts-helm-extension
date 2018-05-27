@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "vsts-helm-extension",
     "name": "Helm Extension",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "publisher": "debben",
     "targets": [{
         "id": "Microsoft.VisualStudio.Services"
